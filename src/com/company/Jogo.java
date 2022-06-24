@@ -1,6 +1,5 @@
 package com.company;
 
-import javax.net.ssl.SNIHostName;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.util.Random;
@@ -16,6 +15,7 @@ public class Jogo extends Canvas implements Runnable {
 
     private Handler handler;
     private HUD hud;
+    private GeraInimigos geraInimigos;
 
     private Random r = new Random();
 
@@ -24,11 +24,10 @@ public class Jogo extends Canvas implements Runnable {
         this.addKeyListener(new InputTeclado(handler));
         new Janela(WIDTH, HEIGHT, "Projeto de Curso - Jogo", this);
         hud = new HUD();
+        geraInimigos = new GeraInimigos(handler, hud);
         handler.addObjeto(new Jogador(WIDTH/2-32, HEIGHT/2-32, ID.Jogador, handler));
-        handler.addObjeto(new Inimigo(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Inimigo, handler));
-        handler.addObjeto(new Inimigo(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Inimigo, handler));
-        handler.addObjeto(new Inimigo(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Inimigo, handler));
-        handler.addObjeto(new Inimigo(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Inimigo, handler));
+        handler.addObjeto(new Inimigo(r.nextInt(Jogo.WIDTH), r.nextInt(Jogo.HEIGHT), ID.Inimigo, handler));
+
     }
 
     //inicia uma thread nessa classe utilizando o this como parâmetro
@@ -108,6 +107,7 @@ public class Jogo extends Canvas implements Runnable {
     private void update(){
         handler.update();
         hud.update();
+        geraInimigos.update();
         ups++;
     }
 

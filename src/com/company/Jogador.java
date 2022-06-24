@@ -29,7 +29,7 @@ public class Jogador extends ObjetosDoJogo{
     public void colisao(){
         for(int i=0; i<handler.objetos.size(); i++){
             ObjetosDoJogo objetoTemp = handler.objetos.get(i);
-            if(objetoTemp.getId() == ID.Inimigo){
+            if(objetoTemp.getId() == ID.Inimigo || objetoTemp.getId() == ID.Inimigo2){
                 if(getLimite().intersects(objetoTemp.getLimite())){
                     HUD.VIDA -= 2;
                 }

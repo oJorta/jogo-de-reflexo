@@ -2,14 +2,14 @@ package com.company;
 
 import java.awt.*;
 
-public class Inimigo extends ObjetosDoJogo{
+public class Inimigo2 extends ObjetosDoJogo{
 
     private Handler handler;
 
-    public Inimigo(int x, int y, ID id, Handler handler) {
+    public Inimigo2(int x, int y, ID id, Handler handler) {
         super(x, y, id);
-        velocidadeX = 5;
-        velocidadeY = 5;
+        velocidadeX = 2;
+        velocidadeY = 9;
         this.handler = handler;
     }
 
@@ -34,7 +34,7 @@ public class Inimigo extends ObjetosDoJogo{
 
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.RED);
+        g.setColor(Color.YELLOW);
         g.fillRect(x, y, 16, 16);
 
     }
