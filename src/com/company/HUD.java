@@ -34,11 +34,19 @@ public class HUD {
         pontos = novoPontos;
     }
 
+    public void setVIDA(int VIDA) {
+        HUD.VIDA = VIDA;
+    }
+
     public int getNivel() {
         return nivel;
     }
 
     public int getPontos() {
         return pontos;
+    }
+
+    public int getVIDA() {
+        return VIDA;
     }
 }

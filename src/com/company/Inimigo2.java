@@ -22,8 +22,8 @@ public class Inimigo2 extends ObjetosDoJogo{
         x += velocidadeX;
         y += velocidadeY;
 
-        //Caso o inimigo colida com os limites da janela do jogo, a sua posição vai
-        //ser invertida para que ele continue percorrendo dentro dos limites da janela
+        //Caso o inimigo colida com os limites da janela do jogo, a sua velocidade (sentido do movimento)
+        //vai ser invertida para que ele continue percorrendo dentro dos limites da janela
         if(y<=0 || y>= Jogo.HEIGHT - 56){
             velocidadeY *= -1;
         }

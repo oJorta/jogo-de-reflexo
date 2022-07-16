@@ -29,5 +29,24 @@ public class Handler {
     public void removeObjeto(ObjetosDoJogo objeto){
         objetos.remove(objeto);
     }
+    //Limpa todos os inimigos da tela
+    public void limpaTela(){
+        for(int i=0; i<objetos.size(); i++){
+            ObjetosDoJogo objetoTemp = objetos.get(i);
+            if(objetoTemp.getId()!= ID.Jogador){
+                removeObjeto(objetoTemp);
+                i--;
+            }
+        }
+    }
+    public void removeJogador(){
+        for(int i=0; i<objetos.size(); i++){
+            ObjetosDoJogo objetoTemp = objetos.get(i);
+            if(objetoTemp.getId() == ID.Jogador){
+                removeObjeto(objetoTemp);
+                i--;
+            }
+        }
+    }
 
 }

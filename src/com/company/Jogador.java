@@ -23,13 +23,15 @@ public class Jogador extends ObjetosDoJogo{
         x = Jogo.limiteDaTela(x, Jogo.WIDTH-48, 0);
         y = Jogo.limiteDaTela(y, Jogo.HEIGHT-68, 0);
 
+        //verifica a posição e se colidir com algum inimigo remove -2 da VIDA
         colisao();
     }
 
     public void colisao(){
         for(int i=0; i<handler.objetos.size(); i++){
             ObjetosDoJogo objetoTemp = handler.objetos.get(i);
-            if(objetoTemp.getId() == ID.Inimigo || objetoTemp.getId() == ID.Inimigo2){
+            if(objetoTemp.getId() == ID.Inimigo || objetoTemp.getId() == ID.Inimigo2 || objetoTemp.getId() == ID.Inimigo3
+            || objetoTemp.getId() == ID.Chefe){
                 if(getLimite().intersects(objetoTemp.getLimite())){
                     HUD.VIDA -= 2;
                 }
@@ -40,7 +42,5 @@ public class Jogador extends ObjetosDoJogo{
     public void render(Graphics g) {
         g.setColor(Color.white);
         g.fillRect(x, y,32, 32);
-
-
     }
 }
