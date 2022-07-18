@@ -6,15 +6,17 @@ import java.util.Random;
 
 public class Jogo extends Canvas implements Runnable {
 
-    //calculo de altura para manter a proporção de tela de 6:9
-    public static final int WIDTH = 640, HEIGHT = WIDTH/12*9;
+    //calculo de altura para manter a proporção de tela em 6:9
+    public static final int LARGURA = 640, ALTURA = LARGURA /12*9;
 
     //necessário para a execução do jogo
     private Thread thread;
     private boolean running = false;
 
+    //variável de controle da pausa do jogo
     public static boolean pausa = false;
 
+    //objetos/classes do jogo
     private Handler handler;
     private HUD hud;
     private GeraInimigos geraInimigos;
@@ -22,25 +24,27 @@ public class Jogo extends Canvas implements Runnable {
 
     private Random r = new Random();
 
+    //estados de execução do jogo
     public enum ESTADOS {
         Menu, Iniciar, Fim
     };
 
     public ESTADOS estadoDoJogo = ESTADOS.Menu;
 
+    //construtor
     public Jogo(){
         handler = new Handler();
         hud = new HUD();
         menu = new Menu(this, hud, handler);
+        geraInimigos = new GeraInimigos(handler, hud);
         this.addKeyListener(new InputTeclado(handler));
         this.addMouseListener(new Menu(this, hud, handler));
 
-        new Janela(WIDTH, HEIGHT, "Projeto de Curso - Jogo", this);
-        geraInimigos = new GeraInimigos(handler, hud);
+        new Janela(LARGURA, ALTURA, "Projeto de Curso - Jogo", this);
 
         if(estadoDoJogo == ESTADOS.Iniciar){
-            handler.addObjeto(new Jogador(WIDTH/2-32, HEIGHT/2-32, ID.Jogador, handler));
-            handler.addObjeto(new Inimigo(r.nextInt(Jogo.WIDTH), r.nextInt(Jogo.HEIGHT), ID.Inimigo, handler));
+            handler.addObjeto(new Jogador(LARGURA /2-32, ALTURA /2-32, ID.Jogador, handler));
+            handler.addObjeto(new Inimigo(r.nextInt(Jogo.LARGURA - 50), r.nextInt(Jogo.ALTURA - 50), ID.Inimigo, handler));
         }
 
     }
@@ -66,24 +70,24 @@ public class Jogo extends Canvas implements Runnable {
     private long tempoDoProximoStatus = System.currentTimeMillis() + 1000; // 1 segundo depois do status atual
     private int fps, ups;
 
-    /* método responsável por gerar o loop do jogo,
-    gerando 60 frames a cada segundo (taxa de atualização) */
+    //método responsável por gerar o loop do jogo, gerando 60 atualizações a cada segundo (taxa de atualização)
+    //método da interface "Runnable"
     public void run(){
         this.requestFocus(); //tenta deixar a janela do jogo como a janela ativa do windows (ação de dar um clique em uma
                             // e deixar ela "focada").
-        double taxaDeAtualizacao = 1.0d/60.0d;
-        double accumulator = 0;
+        double taxaDeAtualizacao = 1.0d/60.0d; // 1 atualização a cada 0.016 segundos -> 60 atualizações por segundo
+        double contador = 0;
         long tempoAtual, ultimaAtualizacao = System.currentTimeMillis();
 
         while(running){
             tempoAtual = System.currentTimeMillis();
             double ultimaRenderEmSegundos = (tempoAtual - ultimaAtualizacao)/1000d;
-            accumulator += ultimaRenderEmSegundos;
+            contador += ultimaRenderEmSegundos;
             ultimaAtualizacao = tempoAtual;
 
-            while (accumulator > taxaDeAtualizacao){
+            while (contador > taxaDeAtualizacao){
                 update();
-                accumulator -= taxaDeAtualizacao;
+                contador -= taxaDeAtualizacao;
             }
             render();
             mostraStatus();
@@ -108,16 +112,17 @@ public class Jogo extends Canvas implements Runnable {
             return;
         }
         Graphics g = bs.getDrawGraphics();
-
+        //fundo preto da janela
         g.setColor(Color.BLACK);
-        g.fillRect(0, 0, WIDTH, HEIGHT);
+        g.fillRect(0, 0, LARGURA, ALTURA);
 
+        //renderiza todos os objetos da lista de ObjetosDoJogo
         handler.render(g);
 
         if(pausa){
+            g.setColor(Color.WHITE);
             g.drawString("PAUSADO", 100, 100);
         }
-
         if(estadoDoJogo == ESTADOS.Iniciar) {
             hud.render(g);
         }else{
@@ -139,16 +144,12 @@ public class Jogo extends Canvas implements Runnable {
                 ups++;
 
                 if(hud.getVIDA() <= 0){
-                    hud.setVIDA(100);
-                    hud.setNivel(1);
-                    hud.setPontos(0);
-
-                    geraInimigos.setNivelAux(1);
-                    geraInimigos.setPontosAux(0);
-
                     estadoDoJogo = ESTADOS.Fim;
                     handler.limpaTela();
                     handler.removeJogador();
+
+                    geraInimigos.setNivelAux(1);
+                    geraInimigos.setPontosAux(0);
                 }
             }
         }else if(estadoDoJogo == ESTADOS.Menu || estadoDoJogo == ESTADOS.Fim){

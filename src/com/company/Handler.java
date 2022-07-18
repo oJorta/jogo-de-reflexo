@@ -4,7 +4,7 @@ import java.awt.*;
 import java.util.LinkedList;
 
 public class Handler {
-    //Lista encadeada que reune todos os objetos do jogo
+    //Lista que reune todos os objetos do jogo
     LinkedList<ObjetosDoJogo> objetos = new LinkedList<ObjetosDoJogo>();
 
     public void update(){

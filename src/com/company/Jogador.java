@@ -8,8 +8,6 @@ public class Jogador extends ObjetosDoJogo{
     public Jogador(int x, int y, ID id, Handler handler) {
         super(x, y, id);
         this.handler = handler;
-        //velocidadeX = 1;
-        //velocidadeY = 1;
     }
 
     public Rectangle getLimite(){
@@ -20,8 +18,8 @@ public class Jogador extends ObjetosDoJogo{
         x += velocidadeX;
         y += velocidadeY;
         //Limita a posição do jogador usando o método estático "limiteDaTela"
-        x = Jogo.limiteDaTela(x, Jogo.WIDTH-48, 0);
-        y = Jogo.limiteDaTela(y, Jogo.HEIGHT-68, 0);
+        x = Jogo.limiteDaTela(x, Jogo.LARGURA -48, 0);
+        y = Jogo.limiteDaTela(y, Jogo.ALTURA -68, 0);
 
         //verifica a posição e se colidir com algum inimigo remove -2 da VIDA
         colisao();
@@ -33,7 +31,7 @@ public class Jogador extends ObjetosDoJogo{
             if(objetoTemp.getId() == ID.Inimigo || objetoTemp.getId() == ID.Inimigo2 || objetoTemp.getId() == ID.Inimigo3
             || objetoTemp.getId() == ID.Chefe){
                 if(getLimite().intersects(objetoTemp.getLimite())){
-                    HUD.VIDA -= 2;
+                    HUD.VIDA -= 1;
                 }
             }
         }

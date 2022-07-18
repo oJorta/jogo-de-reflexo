@@ -14,7 +14,7 @@ public abstract class ObjetosDoJogo {
     }
 
     // esses métodos vão ser escritos pelas classes que herdarão
-    // a classe ObjetosDoJogo (jogador e inimigo)
+    // a classe ObjetosDoJogo (jogador e inimigos)
     public abstract void update();
     public abstract void render(Graphics g);
     public abstract Rectangle getLimite();

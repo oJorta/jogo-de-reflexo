@@ -17,7 +17,8 @@ public class Menu extends MouseAdapter {
         this.handler = handler;
     }
 
-    //métodos da classe MouseAdapter
+    //método da classe MouseAdapter
+    @Override
     public void mousePressed(MouseEvent e){
         int mouseX = e.getX();
         int mouseY = e.getY();
@@ -27,8 +28,8 @@ public class Menu extends MouseAdapter {
         if(jogo.estadoDoJogo == Jogo.ESTADOS.Menu && mouseX >= 230 && mouseX <= 410){
             if(mouseY >= 130 && mouseY <= 194){
                 jogo.estadoDoJogo = Jogo.ESTADOS.Iniciar;
-                handler.addObjeto(new Jogador(Jogo.WIDTH/2-32, Jogo.HEIGHT/2-32, ID.Jogador, handler));
-                handler.addObjeto(new Inimigo(r.nextInt(Jogo.WIDTH), r.nextInt(Jogo.HEIGHT), ID.Inimigo, handler));
+                handler.addObjeto(new Jogador(Jogo.LARGURA /2-32, Jogo.ALTURA /2-32, ID.Jogador, handler));
+                handler.addObjeto(new Inimigo(r.nextInt(Jogo.LARGURA), r.nextInt(Jogo.ALTURA), ID.Inimigo, handler));
             }
         }
 
@@ -41,11 +42,15 @@ public class Menu extends MouseAdapter {
         if(jogo.estadoDoJogo == Jogo.ESTADOS.Fim && mouseX >= 210 && mouseX <= 415) {
             if (mouseY >= 230 && mouseY <= 294) {
                 jogo.estadoDoJogo = Jogo.ESTADOS.Iniciar;
-                handler.addObjeto(new Jogador(Jogo.WIDTH/2-32, Jogo.HEIGHT/2-32, ID.Jogador, handler));
-                handler.addObjeto(new Inimigo(r.nextInt(Jogo.WIDTH), r.nextInt(Jogo.HEIGHT), ID.Inimigo, handler));
+                hud.setVIDA(100);
+                hud.setNivel(1);
+                hud.setPontos(0);
+                handler.addObjeto(new Jogador(Jogo.LARGURA /2-32, Jogo.ALTURA /2-32, ID.Jogador, handler));
+                handler.addObjeto(new Inimigo(r.nextInt(Jogo.LARGURA), r.nextInt(Jogo.ALTURA), ID.Inimigo, handler));
             }
         }
     }
+    @Override
     public void mouseReleased(MouseEvent e){
 
     }
@@ -53,6 +58,7 @@ public class Menu extends MouseAdapter {
     public void update(){
 
     }
+
     public void render(Graphics g){
         if(jogo.estadoDoJogo == Jogo.ESTADOS.Menu){
             Font fonte = new Font("Verdana", 1, 45);
@@ -83,6 +89,7 @@ public class Menu extends MouseAdapter {
             g.setFont(fonte2);
             g.drawString("Jogar de novo", 215, 275);
             g.drawRect(210, 230, 205, 64);
+
         }
 
     }

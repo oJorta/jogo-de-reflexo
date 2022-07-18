@@ -13,8 +13,8 @@ public class Chefe extends ObjetosDoJogo{
 
     public Chefe(int x, int y, ID id, Handler handler) {
         super(x, y, id);
-        velocidadeX = 0;
-        velocidadeY = 2;
+        setVelocidadeX(0);
+        setVelocidadeY(2);
         this.handler = handler;
     }
 
@@ -37,21 +37,15 @@ public class Chefe extends ObjetosDoJogo{
         if(movimentoX == true) {
             //evita o conflito com a condição de inversão de movimento caso aja colisão com a janela
             if(velocidadeX == 0)
-                velocidadeX = 2;
-            //gera inimigos de forma aleatória
+                velocidadeX = 4;
+            //gera inimigos em quantidade aleatória
             int gerarAtaque = r.nextInt(10);
             if(gerarAtaque == 0)
                 handler.addObjeto(new ChefeAtaque(x+48, y+96, ID.Inimigo, handler));
         }
 
-        //Caso o inimigo colida com os limites da janela do jogo, a sua velocidade (sentido do movimento)
-        //vai ser invertida para que ele continue percorrendo dentro dos limites da janela
-        /*
-        if(y<=0 || y>= Jogo.HEIGHT - 56){
-            velocidadeY *= -1;
-        }
-         */
-        if(x<=0 || x>= Jogo.WIDTH - 96){
+        //inverte o sentido caso haja colisao com os limites da janela
+        if(x<=0 || x>= Jogo.LARGURA - 96){
             velocidadeX *= -1;
         }
 

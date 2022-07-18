@@ -11,7 +11,6 @@ public class HUD {
     public void update(){
         VIDA = Jogo.limiteDaTela(VIDA, 100, 0);
         pontos++;
-
     }
     public void render(Graphics g){
         //Fundo da barra de vida
@@ -20,7 +19,7 @@ public class HUD {
         //Barra de vida
         g.setColor(Color.GREEN);
         g.fillRect(15, 15, VIDA*2, 32);
-
+        //Pontuação e nível
         g.setColor(Color.white);
         g.drawString("Pontuação: "+pontos, 15, 65);
         g.drawString("Nível: "+nivel, 15, 80);
@@ -30,8 +29,8 @@ public class HUD {
         this.nivel = nivel;
     }
 
-    public void setPontos(int novoPontos) {
-        pontos = novoPontos;
+    public void setPontos(int pontos) {
+        this.pontos = pontos;
     }
 
     public void setVIDA(int VIDA) {
